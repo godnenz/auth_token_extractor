@@ -1,14 +1,36 @@
 body {
   font-family: sans-serif;
-  text-align: center;
-  padding: 10px;
   width: 400px;
+  padding: 10px;
 }
 
 h1 {
-  font-size: 1.2em;
+  font-size: 18px;
+  margin-top: 0;
+  text-align: center;
+}
+
+h2 {
+  font-size: 16px;
+  margin-top: 15px;
+}
+
+textarea {
+  width: 100%;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+  resize: none;
+}
+
+.display-field {
+  background-color: #f0f0f0;
+  padding: 5px;
+  border-radius: 3px;
+  margin-bottom: 10px;
+  word-wrap: break-word;
 }
 
 button {
+  display: block;
   margin-bottom: 10px;
 }
