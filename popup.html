@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Bythen Auth Token Extractor</title>
+  <title>Bythen Auth Info</title>
   <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-  <h1>Bythen Auth Token Extractor</h1>
-  <button id="copy-button">Copy to Clipboard</button>
+  <h1>Bythen Auth Info</h1>
+  <h2>Account ID</h2>
+  <div id="account-id-display" class="display-field"></div>
+  <h2>Access Token</h2>
   <textarea id="token-display" rows="10" cols="50" readonly></textarea>
+  <button id="copy-token-button">Copy Access Token</button>
   <script src="popup.js"></script>
 </body>
 </html>
