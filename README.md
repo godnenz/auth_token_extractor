@@ -1,12 +1,13 @@
 # Bythen Auth Token Extractor
 
-A simple Chrome extension to extract the `BYTHEN_AUTH` access token and account ID from cookies.
+A simple Chrome extension to extract `access_token` and `account_id` from `BYTHEN_AUTH` or `BYTHEN_AUTH_GACHA` cookies.
 
 ## Features
 
-- Extracts the `account_id` and `access_token` from the `BYTHEN_AUTH` cookie.
+- Extracts `account_id` and `access_token` from the `BYTHEN_AUTH` or `BYTHEN_AUTH_GACHA` cookie.
 - Automatically copies the `access_token` to the clipboard when the extension popup is opened.
-- Displays the `account_id` for easy reference.
+- Displays the `account_id` and the source of the cookie (`BYTHEN_AUTH` or `BYTHEN_AUTH_GACHA`).
+- Refreshes the token information automatically when you switch tabs or navigate to a new page.
 - Simple and clean user interface.
 
 ## Installation
@@ -18,9 +19,10 @@ A simple Chrome extension to extract the `BYTHEN_AUTH` access token and account 
 
 ## How to Use
 
-1.  Navigate to the website where the `BYTHEN_AUTH` cookie is set.
+1.  Navigate to the website where the `BYTHEN_AUTH` or `BYTHEN_AUTH_GACHA` cookie is set.
 2.  Click on the extension icon in your browser toolbar.
-3.  The popup will display your `account_id` and automatically copy the `access_token` to your clipboard.
+3.  The popup will display your `account_id` and the cookie source. The `access_token` will be automatically copied to your clipboard.
+4.  You can click the "Copy Again" button to manually copy the token.
 
 ## Contributing
 
