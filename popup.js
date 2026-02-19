@@ -1,7 +1,15 @@
 document.addEventListener("DOMContentLoaded", function () {
     const tokenDisplay = document.getElementById("token-display");
     const accountIdDisplay = document.getElementById("account-id-display");
+    const cookieSourceDisplay = document.getElementById("cookie-source-display");
     const copyTokenButton = document.getElementById("copy-token-button");
+
+    const COOKIE_NAMES = [
+        "BYTHEN_AUTH",
+        "bythen_cms",
+        "BYTHEN_AUTH_GACHA",
+        "BYTHEN_PLATFORM_TOKEN",
+    ];
 
     function extractAndDisplay() {
         chrome.tabs.query(
@@ -9,48 +17,28 @@ document.addEventListener("DOMContentLoaded", function () {
             function (tabs) {
                 if (tabs[0]) {
                     const currentUrl = tabs[0].url;
-
-                    // Try cookies in priority order: BYTHEN_AUTH -> bythen_cms -> BYTHEN_AUTH_GACHA
-                    tryCookie(currentUrl, "BYTHEN_AUTH", function (success) {
-                        if (!success) {
-                            tryCookie(
-                                currentUrl,
-                                "bythen_cms",
-                                function (success) {
-                                    if (!success) {
-                                        tryCookie(
-                                            currentUrl,
-                                            "BYTHEN_AUTH_GACHA",
-                                            function (success) {
-                                                if (!success) {
-                                                    tokenDisplay.value =
-                                                        "No authentication cookies found (BYTHEN_AUTH, bythen_cms, or BYTHEN_AUTH_GACHA).";
-                                                    accountIdDisplay.textContent =
-                                                        "Cookie not found.";
-                                                }
-                                            }
-                                        );
-                                    }
-                                }
-                            );
-                        }
-                    });
+                    tryNextCookie(currentUrl, 0);
                 } else {
-                    tokenDisplay.value = "Could not determine active tab.";
-                    accountIdDisplay.textContent =
-                        "Could not determine active tab.";
+                    displayError("Could not determine active tab.");
                 }
             }
         );
     }
 
-    function tryCookie(url, cookieName, callback) {
+    function tryNextCookie(url, index) {
+        if (index >= COOKIE_NAMES.length) {
+            displayError(
+                `No authentication cookies found (${COOKIE_NAMES.join(", ")}).`
+            );
+            return;
+        }
+
+        const cookieName = COOKIE_NAMES[index];
         chrome.cookies.get({ url: url, name: cookieName }, function (cookie) {
             if (cookie) {
                 processCookie(cookie, cookieName);
-                callback(true);
             } else {
-                callback(false);
+                tryNextCookie(url, index + 1);
             }
         });
     }
@@ -58,11 +46,22 @@ document.addEventListener("DOMContentLoaded", function () {
     function processCookie(cookie, cookieName) {
         try {
             const decodedValue = decodeURIComponent(cookie.value);
-            const jsonValue = JSON.parse(decodedValue);
-            const accessToken = jsonValue.access_token;
-            const accountId = jsonValue.account_id;
+            let accessToken = decodedValue;
+            let accountId = null;
+
+            try {
+                // Try parsing as JSON first
+                const jsonValue = JSON.parse(decodedValue);
+                if (jsonValue && typeof jsonValue === "object") {
+                    accessToken = jsonValue.access_token || accessToken;
+                    accountId = jsonValue.account_id;
+                }
+            } catch (e) {
+                // Not JSON, use raw value as token
+            }
 
             tokenDisplay.value = accessToken;
+            cookieSourceDisplay.textContent = cookieName;
 
             // Only display account ID if it exists
             if (accountId !== undefined && accountId !== null) {
@@ -79,9 +78,14 @@ document.addEventListener("DOMContentLoaded", function () {
                 }, 2000);
             });
         } catch (e) {
-            tokenDisplay.value = "Error parsing cookie value.";
-            accountIdDisplay.textContent = "Error parsing cookie value.";
+            displayError("Error parsing cookie value.");
         }
+    }
+
+    function displayError(message) {
+        tokenDisplay.value = message;
+        accountIdDisplay.textContent = "Error";
+        cookieSourceDisplay.textContent = "Error";
     }
 
     copyTokenButton.addEventListener("click", () => {
