@@ -1,29 +1,29 @@
-# Bythen Auth Token Extractor
+# Bythen Session Helper
 
-A simple Chrome extension to extract `access_token` and `account_id` from `BYTHEN_AUTH` or `BYTHEN_AUTH_GACHA` cookies.
+A lightweight utility for developers to inspect session details during testing.
 
 ## Features
 
-- Extracts `account_id` and `access_token` from the `BYTHEN_AUTH` or `BYTHEN_AUTH_GACHA` cookie.
-- Automatically copies the `access_token` to the clipboard when the extension popup is opened.
-- Displays the `account_id` and the source of the cookie (`BYTHEN_AUTH` or `BYTHEN_AUTH_GACHA`).
-- Refreshes the token information automatically when you switch tabs or navigate to a new page.
-- Simple and clean user interface.
+- View current session identifiers and authentication status.
+- Inspects session cookies for validity.
+- Quick copy functionality for token management during development.
+- Automatically refreshes session data on navigation.
+- Minimalist interface for unobtrusive use.
 
 ## Installation
 
-1.  **Download or Clone:** Get the extension files by either downloading the ZIP or cloning this repository.
-2.  **Open Chrome Extensions:** In your Chrome browser, navigate to `chrome://extensions`.
-3.  **Enable Developer Mode:** Turn on the "Developer mode" toggle in the top right corner.
-4.  **Load Unpacked:** Click the "Load unpacked" button and select the directory where you saved the extension files.
+1.  **Download or Clone:** Get the extension files.
+2.  **Open Chrome Extensions:** Navigate to `chrome://extensions`.
+3.  **Enable Developer Mode:** Toggle "Developer mode" on.
+4.  **Load Unpacked:** Select the extension directory.
 
-## How to Use
+## Usage
 
-1.  Navigate to the website where the `BYTHEN_AUTH` or `BYTHEN_AUTH_GACHA` cookie is set.
-2.  Click on the extension icon in your browser toolbar.
-3.  The popup will display your `account_id` and the cookie source. The `access_token` will be automatically copied to your clipboard.
-4.  You can click the "Copy Again" button to manually copy the token.
+1.  Navigate to the target application.
+2.  Click the extension icon to view session details.
+3.  The relevant session token is automatically prepared for clipboard use.
+4.  Use the copy button to manually retrieve the token string if needed.
 
 ## Contributing
 
-Contributions are welcome! Please feel free to submit a pull request or open an issue.
+Contributions are welcome. Please open an issue for any bugs or feature requests.

@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Bythen Auth Token Extractor",
-  "version": "1.0",
-  "description": "Extracts the BYTHEN_AUTH access token from cookies.",
+  "version": "1.2",
+  "description": "Extracts authentication tokens from Bythen websites.",
   "permissions": [
     "cookies",
     "tabs",
